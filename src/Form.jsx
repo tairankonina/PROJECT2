@@ -154,7 +154,11 @@ import { useForm } from "react-hook-form";
 import MapComponent from "./MapComponent"; // ייבוא הקומפוננטה של המפה
 import "./Form.css";
 
+/**
+ 
+ */
 export default function Add() {
+  // חיבור לפונקציות של React Hook Form
   const { register, handleSubmit, formState: { isValid, errors }, reset, setValue } = useForm({
     mode: "onChange", 
     defaultValues: {
@@ -162,12 +166,15 @@ export default function Add() {
     },
   });
 
+  // משתנים לניהול המיקום והכתובת
   const [location, setLocation] = useState({ lat: 31.257611, lon: 35.201139 }); // קואורדינטות ברירת מחדל של רחוב הדס ערד
   const [addressSuggestions, setAddressSuggestions] = useState([]); // שדה להצעות כתובת
   const [selectedAddress, setSelectedAddress] = useState(""); // שדה לניהול הכתובת שנבחרה
 
+  /**
+   * פונקציה להפקת המיקום הנוכחי של המשתמש אם זמין, אחרת משאירה את המיקום בברירת המחדל
+   */
   useEffect(() => {
-    // ניסיון להשיג את המיקום הנוכחי של המשתמש
     const getLocation = () => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -177,20 +184,22 @@ export default function Add() {
           },
           () => {
             console.error("לא ניתן להשיג את המיקום, נעבור למיקום ברירת מחדל");
-            // של הבית שלי הדס ערד אם לא הצלחנו להשיג את המיקום, נשאיר את מיקום ברירת המחדל
-            setLocation({ lat: 31.257611, lon: 35.201139 });
+            setLocation({ lat: 31.257611, lon: 35.201139 }); // אם לא הצלחנו להשיג את המיקום, נשאיר את המיקום ברירת המחדל
           }
         );
       } else {
         console.error("הדפדפן לא תומך בזיהוי מיקום");
-        // אם אין תמיכה בזיהוי מיקום, נשאיר את מיקום ברירת המחדל
-        setLocation({ lat: 31.257611, lon: 35.201139 });
+        setLocation({ lat: 31.257611, lon: 35.201139 }); // אם אין תמיכה בזיהוי מיקום, נשאיר את המיקום ברירת המחדל
       }
     };
 
     getLocation(); // קריאה לפונקציה בעת טעינת הקומפוננטה
   }, []);
 
+  /**
+   * פונקציה לניהול שינוי בכתובת שהמשתמש מקליד בשדה
+   * חיפוש הצעות כתובת והצגתן
+   */
   const handleAddressChange = async (e) => {
     const query = e.target.value;
     setSelectedAddress(query); // עדכון הכתובת שהמשתמש מקליד
@@ -200,25 +209,33 @@ export default function Add() {
         const data = await response.json();
         setAddressSuggestions(data); // עדכון רשימת ההצעות
       } catch (error) {
-        console.error("Error fetching address suggestions:", error);
+        console.error("Error fetching address suggestions:", error); // טיפול בשגיאה במקרה של בעיה בהבאת ההצעות
       }
     } else {
       setAddressSuggestions([]); // אם לא מכניסים מספיק תווים, מנקה את ההצעות
     }
   };
 
+  /**
+   * פונקציה לניהול בחירת כתובת מתוך ההצעות
+   * עדכון המיקום והכתובת שנבחרה
+   */
   const handleAddressSelect = (suggestion) => {
     setSelectedAddress(suggestion.display_name); // עדכון הכתובת שנבחרה
     setValue("address", suggestion.display_name); // עדכון הכתובת בשדה
     setLocation({
       lat: parseFloat(suggestion.lat),
       lon: parseFloat(suggestion.lon),
-    });
+    }); // עדכון המיקום לפי הקואורדינטות שנבחרו
     setAddressSuggestions([]); // מנקה את רשימת ההצעות לאחר הבחירה
   };
 
+  /**
+   * פונקציה לשמירת המידע שנמסר מהטופס
+   * מאפס את כל השדות ומחזיר את המיקום לברירת המחדל
+   */
   const save = (data) => {
-    console.log(data); // כאן תוכל להוסיף את הקוד לשמירת הנתונים
+    console.log(data); // הצגת המידע שהוזן במסוף
     reset({
       name: '',
       address: '',
@@ -230,14 +247,14 @@ export default function Add() {
       rooms: '',
       distance: '',
       status: 'מחפש',
-    });
+    }); // איפוס הטופס לערכים ברירת מחדל
     setLocation({ lat: 31.257611, lon: 35.201139 }); // לאפס את המיקום המוגדר
   };
 
   return (
     <div className="page-layout">
       <form className="form-add" onSubmit={handleSubmit(save)}>
-      <input
+        <input
            {...register("name", { required: "זהו שדה חובה" })}
            placeholder="שם משתמש"
           type="text"
