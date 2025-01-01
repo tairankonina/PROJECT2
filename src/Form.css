@@ -1,0 +1,147 @@
+/* קונטיינר ראשי שיכיל את הטופס והמפה */
+.form-and-map-container {
+  display: flex; /* שימוש ב-flexbox */
+  justify-content: flex-start; /* תצמיד את האלמנטים לשמאל */
+  gap: 30px; /* רווח בין הטופס למפה */
+  margin: 20px; /* מרווח מסביב */
+  width: 100%; /* מלא את כל רוחב הדף */
+}
+
+/* עיצוב הטופס */
+.form-add {
+  display: flex;
+  flex-direction: column; /* מאפשר הצגת האלמנטים בצורה אנכית */
+  gap: 20px; /* רווח בין כל שדה */
+  width: 30%; /* הגדרת רוחב של 45% מהקונטיינר */
+  max-width: 500px; /* הגבלת רוחב הטופס למקסימום */
+  padding: 30px; /* ריפוד בתוך הטופס */
+  background-color: #f9f9f9; /* צבע רקע בהיר */
+  border-radius: 12px; /* פינות מעוגלות */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* צל עדין */
+  position: absolute; /* ממקם את הטופס באופן מוחלט */
+  top: 10px; /* 50 פיקסלים מהחלק העליון של הדף */
+  right: 0; /* ממקם את הטופס בצד ימין של הדף */
+}
+  /* עיצוב עבור כל שדה */
+  input,
+  select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc; /* גבול אפור עדין */
+    border-radius: 5px;
+    width: 100%; /* מלא את רוחב הטופס */
+    box-sizing: border-box; /* כולל ריפוד וגבול בתוך הרוחב הכולל */
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield; /* להסיר חיצוי בנתונים מסוג מספר */
+  }
+  
+  input[type="date"] {
+    cursor: pointer;
+  }
+  
+  /* כותרת של כל שדה */
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+ 
+
+  /* עיצוב כפתור שליחה */
+  input[type="submit"] {
+    background-color: #4CAF50; /* צבע רקע ירוק */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  input[type="submit"]:disabled {
+    background-color: #ddd; /* כפתור לא פעיל */
+    cursor: not-allowed;
+  }
+  
+  /* עיצוב לשדות גיל ילדים */
+  div {
+    display: flex;
+    flex-direction: column; /* שדה גיל הילד יוצג בצורה אנכית */
+    gap: 10px;
+  }
+  
+  input[type="number"] {
+    width: 100%; /* שדה גיל יוכל להיות בגודל קטן יותר */
+    display: inline-block;
+  }
+  
+  /* רווחים בין השדות */
+  .form-add-worker input, .form-add-worker select {
+    margin-bottom: 10px;
+  }
+  .page-wrapper {
+    display: flex;
+    justify-content: space-between; /* דואג שהטופס והמפה יימצאו בצדדים מנוגדים */
+    min-height: 100vh; /* נותן לדף גובה מלא */
+  }
+  
+  
+  .map-wrapper {
+    /* margin-top: 10px; */
+    width: 65%; /* המפה תופסת את יתרת הרוחב */
+    height: 80vh; /* גובה מלא של הדף */
+    padding: 0px;
+  }
+
+  .address-input-wrapper {
+    position: relative;
+  }
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    border-radius: 10px; /* עיגול הקצוות */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* הוספת צל עדין לתפריט */
+  }
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  
